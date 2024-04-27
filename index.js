@@ -1,4 +1,4 @@
-var data = [
+let data = [
     {
         Country: "Spain",
         CountryCode: "ES",
@@ -102,20 +102,53 @@ var data = [
 ];
 
 
-let button = document.getElementById('button');
-let table = document.getElementById('table');
-button.addEventListener('click', function () {
-    let tbody = document.createElement('tbody');
-    for (let i = 0; i < data.length; i++) {
-        let currentRow = Object.values(data[i]);// country,countryCode...
-        let tr = document.createElement('tr');
-        for (let j = 0; j < currentRow.length; j++) {
-            let td = document.createElement('td');
-            td.innerText = currentRow[j];
+// button.addEventListener('click', function () {
+//     let tbody = document.createElement('tbody');
+//     for (let i = 0; i < data.length; i++) {
+//         let currentRow = Object.values(data[i]);// country,countryCode...
+//         let tr = document.createElement('tr');
+//         for (let j = 0; j < currentRow.length; j++) {
+//             let td = document.createElement('td');
+//             td.innerText = currentRow[j];
+//             tr.appendChild(td);
+//         }
+//         tbody.appendChild(tr);
+//         table.appendChild(tbody);
+//     }
+
+// });
+
+let buildTableBtn = document.getElementById("buildTable");
+
+function buildRows(countries) {
+    let tbodyRows = document.getElementById("rows");
+    for (let i = 0; i < countries.length; i++) {
+        let tr = document.createElement("tr");
+        let currentRowValues = Object.values(countries[i]);
+        for (let j = 0; j < currentRowValues.length; j++) {
+            let td = document.createElement("td");
+            td.innerText = currentRowValues[j];
             tr.appendChild(td);
         }
-        tbody.appendChild(tr);
-        table.appendChild(tbody);
+        tbodyRows.appendChild(tr);
     }
+}
 
+function buildTableHead(fields) {
+    let headTr = document.getElementById("headRow");
+    for (let i = 0; i < fields.length; i++) {
+        let th = document.createElement("th");
+        th.innerText = fields[i];
+        headTr.appendChild(th);
+    }
+}
+
+function buildTable(countries) {
+    buildTableHead(Object.keys(countries[0]));
+    buildRows(countries);
+}
+
+buildTableBtn.addEventListener("click", function () {
+    buildTable(data);
 });
+
